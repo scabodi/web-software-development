@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>My form</title>
+  <link rel="stylesheet" type="text/css" href="../lib/bootstrap.min.css" />
+  <link rel="stylesheet" type="text/css" href="../lib/exercises.css" />
+</head>
+<body>
+<form action="http://127.0.0.1/wsd/html_form_check" method="post">
+  <label for="email">Email: </label> <input type="email" name="email" id="email" ><br>
+  <label for="pwd">Password:</label> <input type="password" name="passwd" id="pwd" ><br>
+  <label for="pwd2">Repeat password:</label> <input type="password" name="passwd2" id="pwd2"><br>
+  <label for="lang">Language: </label> <select id="lang" name="lang">
+                              <option value="fi">Finnish</option>
+                              <option value="sv">Swedish</option>
+                              <option value="no">Norwegian</option>
+                              <option value="da">Danish</option>
+                              <option value="is">Icelandic</option>
+                            </select><br>
+  <input type="checkbox" name="terms" id="terms"> <label for="terms">I accept terms and conditions </label><br>
+  <input type="submit" name="submit" id="submit" value="Register">
+</form>
+
+</body>

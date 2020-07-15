@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <script src="lib/jquery-3.2.1.min.js"></script>
+  <script>
+  $(document).ready( function() {
+    $(document).ready(function() {
+
+      document.getElementById("submitReverser").addEventListener("click", function () {
+
+        var msg_input = document.getElementById("toBeReversed").value;
+
+        var msg = msg_input.split("").reverse().join("");
+        var json = {"payload": msg};
+        window.parent.postMessage(json, '*');
+
+      });
+      document.getElementById("clearInput").addEventListener("click", function () {
+        var json = {"payload": "INPUT CLEARED"};
+        window.parent.postMessage(json, '*');
+
+      });
+    });
+
+  });
+  </script>
+</head>
+<body>
+<form id="reverser" method="post">
+  <input id="toBeReversed" name="input" text>
+  <input type="submit" id="submitReverser" value="Submit">
+</form>
+<button id="clearInput">Clear Input</button>
+
+</body>
+</html>

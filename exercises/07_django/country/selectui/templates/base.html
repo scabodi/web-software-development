@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>{% block title %}Exercise template{% endblock %}</title>
+    {% block header %}
+    <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
+    {% endblock %}
+  </head>
+  <body>
+    {% block content %}
+    You must use the template tag <code>block</code> with a block name
+    <code>content</code> in your own templates to put content to this area.
+    {% endblock %}
+  </body>
+</html>

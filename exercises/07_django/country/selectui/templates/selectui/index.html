@@ -1,0 +1,26 @@
+{% extends "base.html" %}
+{% load staticfiles %}
+
+{% block title %}Continents{% endblock %}
+
+{% block header %}
+{{ block.super }}
+<link rel="stylesheet" type="text/css" href="{% static 'selectui/style.css' %}">
+<script type="text/javascript" src="{% static 'selectui/ajax.js' %}"></script>
+{% endblock %}
+
+{% block content %}
+<p>If you see this, your application is correctly setup.</p>
+
+{% include "selectui/continentmenu.html" %}
+
+<h2 id="continentName">{{ continent.name }}</h2>
+
+<div id="tableContainer">
+
+  {% if continent %}
+    {% include "selectui/countrytable.html" %}
+  {% endif %}
+
+</div>
+{% endblock %}

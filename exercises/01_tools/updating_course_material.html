@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Updating Course Material</title>
+  <link rel="stylesheet" type="text/css" href="../lib/bootstrap.min.css" />
+  <link rel="stylesheet" type="text/css" href="../lib/exercises.css" />
+</head>
+<body>
+
+  <div id="exercises">
+    <h1>Updating Course Material</h1>
+  </div>
+
+  <div class="content">
+    <h2>Prelude</h2>
+    <blockquote>
+      "To be able to collaborate on any Git project, you need to know how to manage
+      your remote repositories. Remote repositories are versions of your project
+      that are hosted on the Internet or network somewhere. You can have several of
+      them, each of which generally is either read-only or read/write for you."
+      -<a href="http://git-scm.com/book/en/v2/Git-Basics-Working-with-Remotes">
+        Working with Remotes on Pro Git book
+      </a>
+    </blockquote>
+  </div>
+
+  <div class="content" id="upstream">
+
+    <div class="panel panel-info">
+      <div class="panel-heading">Updating Your Repository</div>
+      <div class="panel-body">
+        <p>
+          These instructions guide you through the process of updating the course
+          material in your repository to the latest version. The latest version
+          will contain new material as well as corrections to the previously released material.
+        </p>
+
+        <p>
+          <code>git</code> has a concept of branches with the main idea being that there
+          might be multiple versions of the same repository with differing contents. If
+          you login to Aalto GitLab and browse your project and the public one
+          (<a href="https://version.aalto.fi/gitlab/oseppala/wsd2019">oseppala/wsd2019</a>)
+          the contents will be (slightly) different. Your repository hopefully has your own
+          commits where you've solved the exercises. And the public material might have some
+          corrections which are not yet in your repository.
+        </p>
+
+        <p>
+          First you will set up the public material as remote (this is only done once)
+          then you will <code>fetch</code> the updates from there. After that you are
+          ready to <code>merge</code> those updates to your repository.
+        </p>
+      </div>
+    </div>
+
+    <div class="panel panel-success">
+      <div class="panel-heading">Short Version</div>
+      <div class="panel-body">
+        <ol>
+          <li>Make sure you have committed all changes and you are on branch master</li>
+          <li>Add the remote as upstream: <code>git remote add upstream git@version.aalto.fi:oseppala/wsd2019.git</code></li>
+          <li>Merge upstream changes with <code>git pull upstream master</code></li>
+          <li>Push the changes to your GitLab repository (<code>git push</code> as usual)</li>
+        </ol>
+      </div>
+    </div>
+
+    <h2>
+      Working with remotes<br/>
+      <small>... or how to get the latest course material</small>
+    </h2>
+    <p>
+      Before you start this process you should have all your changes committed and
+      no modified files in the project with non-staged commits. You can check this
+      with <code>git status</code>
+    </p>
+
+    <pre>
+$ <strong>git status</strong>
+On branch master
+Your branch is up-to-date with 'origin/master'.
+nothing to commit, working directory clean</pre>
+
+    <p class="alert alert-warning">
+      If you do not get the message about working directory being clean. You
+      should first resolve that before continuing, otherwise you might run
+      into problems later on.
+    </p>
+
+    <p>
+      Before you start you can check that you have your own repository
+      marked as 'origin'.
+    </p>
+
+    <pre>
+$ <strong>git remote -v</strong>
+origin  git@version.aalto.fi:YOUR_USERNAME/wsd2019.git (fetch)
+origin  git@version.aalto.fi:YOUR_USERNAME/wsd2019.git (push)</pre>
+
+    <p>
+      Next you will need to add the public course material repository as 'upstream'.
+    </p>
+
+    <pre>
+$ <strong>git remote add upstream git@version.aalto.fi:oseppala/wsd2019.git</strong></pre>
+
+    <p>
+      In your list your remotes you should now see your own repository in Gitlab
+      (marked as 'origin') and the official material repository marked as 'upstream'
+    </p>
+
+    <pre>
+$ <strong>git remote -v</strong>
+origin  git@version.aalto.fi:YOUR_USERNAME/wsd2019.git (fetch)
+origin  git@version.aalto.fi:YOUR_USERNAME/wsd2019.git (push)
+upstream  git@version.aalto.fi:oseppala/wsd2019.git (fetch)
+upstream  git@version.aalto.fi:oseppala/wsd2019.git (push)</pre>
+
+    <p class="alert alert-warning">
+      Notice that you only need to add the remote once, after this you can pull
+      new updates whenever you like with the following instructions
+    </p>
+    <p>
+      Next you will incorporate the latest changes to the official repository,
+      this is done with <code>git pull</code> command.
+    </p>
+
+    <pre>
+$ <strong>git pull upstream master</strong>
+remote: Counting objects: 42, done.
+remote: Compressing objects: 100% (35/35), done.
+remote: Total 35 (delta 21), reused 0 (delta 0)
+Unpacking objects: 100% (35/35), done.
+From version.aalto.fi:oseppala/wsd2019
+* [new branch]      master     -&gt; upstream/master
+Merge made by the 'recursive' strategy.
+exercises/02_html_css/instructions.html   |  6 ++---
+exercises/03_javascript/instructions.html |  5 ++--
+lectures/html_css.html                    | 38 +++++++++++++++----------------
+3 files changed, 25 insertions(+), 24 deletions(-)
+
+$</pre>
+
+    <p>
+      You can see what has changed by with the <code>git log</code> command.
+      What you see is latest first list of commits on the material repository.
+    </p>
+
+    <pre>
+commit 987190f471dc2cfcccde00bc7bf34b3160ece16f
+Merge: df562b5 bb76eaf
+Author: Example Student &lt;example.student@aalto.fi&gt;
+Date:   Fri Oct 31 11:51:48 2014 +0200
+
+Merge remote-tracking branch 'upstream/master'
+
+commit df562b5d89bd30c7b335d609c1c09d35ceebafe8
+Author: Example Student &lt;example.student@aalto.fi&gt;
+Date:   Fri Oct 31 11:48:54 2014 +0200
+
+Added early version of form
+
+commit bb76eaf638fee4336312fc5b4701b293dd8d5c3d
+Merge: 83851c7 af4ef8e
+Author: Lassi Haaranen &lt;lassi.haaranen@aalto.fi&gt;
+Date:   Thu Oct 30 20:27:28 2014 +0200
+
+Merge branch 'corrections' of /vcs/git/repositories/scop/wsd-material
+
+commit af4ef8e4cc5b1203699a14800dea05dc03ef4e76
+Author: Ville Skyttä &lt;ville.skytta@iki.fi&gt;
+Date:   Thu Oct 30 20:09:24 2014 +0200
+
+HTML5 was finalized 28 Oct 2014
+
+http://www.w3.org/blog/news/archives/4167
+
+commit d29096f6c2b4505394861da333b3d9782c63ba4d
+Author: Ville Skyttä &lt;ville.skytta@iki.fi&gt;
+Date:   Thu Oct 30 20:08:04 2014 +0200
+
+Spelling fixes
+
+commit ad6469c17fece2075a69ee4e59f0d2f1a70db2ec
+Author: Ville Skyttä &lt;ville.skytta@iki.fi&gt;
+Date:   Thu Oct 30 19:54:39 2014 +0200
+
+Remove unnecessary executable bits
+
+commit 83851c71d30a704c5d383e9199b9db5a68d1267a
+Merge: 644e733 817c000
+Author: wsd-agent &lt;lassi.haaranen+wsd@aalto.fi&gt;
+Date:   Thu Oct 30 17:54:56 2014 +0200
+
+Merge branch 'korjaukset' of /vcs/git/repositories/splyysh/wsd-material</pre>
+
+    <p>
+      Finally you need to push your changes to Gitlab, in the same way you've
+      done with exercises previously with <code>git push</code>.
+    </p>
+
+    <h2>Additional help</h2>
+    <p>
+      These additional resources might prove to be useful
+    </p>
+    <ul>
+      <li><a href="http://git-scm.com/book/en/v2/Git-Basics-Working-with-Remotes">http://git-scm.com/book/en/v2/Git-Basics-Working-with-Remotes</a></li>
+      <li><a href="https://help.github.com/articles/configuring-a-remote-for-a-fork/">https://help.github.com/articles/configuring-a-remote-for-a-fork/</a></li>
+      <li><a href="https://help.github.com/articles/syncing-a-fork/">https://help.github.com/articles/syncing-a-fork/</a></li>
+    </ul>
+    <p>
+      If you run into merge conflicts, the following links might be helpful
+    </p>
+    <ul>
+      <li><a href="https://help.github.com/articles/resolving-a-merge-conflict-from-the-command-line/">https://help.github.com/articles/resolving-a-merge-conflict-from-the-command-line/</a></li>
+      <li><a href="https://help.github.com/articles/resolving-merge-conflicts/">https://help.github.com/articles/resolving-merge-conflicts/</a></li>
+    </ul>
+
+  </div>
+
+</body>
+</html>

@@ -1,0 +1,21 @@
+{% extends "base.html" %}
+{% load crispy_forms_tags %}
+  {% block title %}Game modify{% endblock title %}
+  {% block content %}
+    <div class="container">
+      <h1>Modify your game</h1>
+      <form action="" method="post">
+        {% csrf_token %}
+        <div class="form-group">
+          {{ form|crispy }}
+          {% if button == "modify" %}
+            <input type="submit" class="btn btn-info" value="Modify">
+          {% else %}
+            <div class="alert alert-success">
+              <p>The game <strong>{{game.name}}</strong> has been successfully modified.</p>
+              <a href="{{redirect_url}}">Click here</a> to go back to the catalogue.
+            </div>
+          {% endif %}
+      </form>
+    </div>
+    {% endblock content %}

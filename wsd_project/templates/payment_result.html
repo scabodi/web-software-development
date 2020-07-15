@@ -1,0 +1,21 @@
+{% extends "base.html" %}
+  {% block title %}Payment result{% endblock title %}
+  {% block content %}
+    <div class="container p-3 my-3">
+      <div class="jumbotron">
+        <h1>Your payment result is
+          {% if status == "success" %}
+            <span class="badge badge-success">{{status}}</span>
+          {% elif status == "cancel" %}
+            <span class="badge badge-warning">{{status}}</span>
+          {% elif "error" in status %}
+            <span class="badge badge-danger">{{status}}</span>
+          {% endif %}
+        </h1><br>
+        <ul class="list-group">
+          <li class="list-group-item">Payment ID: {{pid}}</li>
+          <li class="list-group-item">Reference ID: {{rid}}</li>
+        </ul>
+      </div>
+    </div>
+    {% endblock content %}

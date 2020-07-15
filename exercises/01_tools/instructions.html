@@ -1,0 +1,298 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Round 1: Setting Up Tools</title>
+  <link rel="stylesheet" type="text/css" href="../lib/bootstrap.min.css" />
+  <link rel="stylesheet" type="text/css" href="../lib/exercises.css" />
+</head>
+<body>
+
+  <div id="exercises">
+    <h1>Round 1: Setting Up Tools</h1>
+    <ol>
+      <li><a href="#gitlab">Getting Started With GitLab</a></li>
+      <li><a href="#git">Getting Started With Git</a></li>
+      <li><a href="#browser">Browser Tools</a></li>
+    </ol>
+  </div>
+
+  <div class="content" id="gitlab">
+    <h1>1. Getting Started With GitLab</h1>
+    <p>Obviously you have passed this step.</p>
+  </div>
+
+  <div class="content" id="git">
+    <h1>2. Getting Started With Git</h1>
+
+    <div class="panel panel-info">
+      <div class="panel-heading">Description</div>
+      <div class="panel-body">
+        <p>
+          This exercise is meant as a gentle introduction to the git workflow
+          used during this course. You will learn how to clone your git project
+          to a computer, edit a file, <em>add those edits</em>, commit your changes
+          and finally push them to your repository at GitLab. We check the
+          exercises/01_tools/hello.html in your GitLab repository and expect to
+          see the following changes (editing the file is easiest part of this
+          exercise):
+        </p>
+        <ul>
+          <li>Document hello.html will be valid html5</li>
+          <li>Content of the meta element with the name of author will be changed</li>
+          <li>Content of em with the id of signature will be changed</li>
+          <li>The changed meta and #id will be the same</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="panel panel-success">
+      <div class="panel-heading">Short Instructions</div>
+      <div class="panel-body">
+        <ol>
+          <li>Install git (if not already installed) to your computer</li>
+          <li>Generate and set your SSH key to GitLab</li>
+          <li>Clone your wsd2019 project to your local computer</li>
+          <li>Solve the exercise as detailed in the description</li>
+          <li>Add your changes, commit them and then push your commit to GitLab</li>
+          <li>Submit Exercise to A+</li>
+        </ol>
+      </div>
+    </div>
+
+    <h2>Detailed instructions</h2>
+
+    <h3>1. Installing git</h3>
+    <p>
+      In addition to the remote version repository that was created in the last exercise,
+      you need the git program to control your local version repository and
+      push into and pull from the remote.
+    </p>
+    <p>
+      Many modern Linux systems have git installed by default.
+      This is the case for example in the Aalto computer labs.
+      You can search for "terminal" program
+      in your system and test your installation by typing <kbd>git</kbd>.
+      If you do not have git already installed on your computer, where you
+      intend to work, you can download git for various platforms from the
+      official site: <a href="http://git-scm.com/downloads" target="_blank">http://git-scm.com/downloads</a>.
+    </p>
+    <p class="alert alert-danger">
+      <strong>On Windows</strong>, the rest of the course instructions expect you are using
+      <strong>Git Bash</strong> -terminal from the git installation instead of the
+      default Windows command prompt.
+      On high resolution screens you probably want to make the Git Bash font
+      bigger. Click at the top left corner to open the window menu.
+      Adjust font size in properties.
+    </p>
+    <p class="alert alert-info">
+      <strong>On OS X</strong>, calling <kbd>git</kbd> in terminal
+      may present a dialog to install command line developer tools.
+      This is a good option and will play well with any Apple tools in future.
+      If you want the latest Git version you can
+      download installation package from git-scm.com.
+      However, Os X will refuse to install it when clicking.
+      You can install the package from unidentified developer via holding ctrl-key
+      and clicking package to select "Open" in context menu.
+    </p>
+    <figure class="well">
+      <img alt="Git BASH" class="img-responsive" src="https://git-for-windows.github.io/img/gw1.png" />
+      <figcaption><em>Git BASH on Windows</em></figcaption>
+    </figure>
+    <p class="alert alert-warning">
+      Many IDE or versioning programs can support git and you may use them on this
+      course without support. We encourage you to learn git using command line
+      which you can use in all environments and over remote connections. General
+      help using a bash type command line can be found for example here
+      <a href="http://www.ee.surrey.ac.uk/Teaching/Unix/" target="_blank">http://www.ee.surrey.ac.uk/Teaching/Unix/</a>
+      and you can receive help at the exercise sessions.
+    </p>
+
+    <h3>2. Generate and set SSH key</h3>
+    <p>
+      To enable cloning your project to your local computer you need to add an
+      SSH key to your GitLab profile. The following commands typed in to a
+      terminal will create a new key pair and display the public key.
+      (If you already have a key you are using somewhere else, you can use the
+      existing one.)
+    </p>
+    <pre class="terminal">
+$ <strong>ssh-keygen -t rsa</strong>
+# ... you will receive a series of questions ...
+# Type <strong>[ENTER]</strong> to accept each default, really no changes unless you know why.
+$ <strong>cat .ssh/id_rsa.pub</strong>
+# ... the public key encoded as characters prints out ...
+# In Git Bash use window menu: edit &gt; mark to copy the key to clipboard.</pre>
+    <p>
+      The public key is entered to your <a href="https://version.aalto.fi/gitlab/profile/keys" target="_blank">GitLab profile</a>
+      via "Add an SSH Key". The title is only for your own information.
+    </p>
+
+    <h3>3. Cloning a project</h3>
+    <p>
+      Now you are ready to clone your project on your local machine.
+      You can copy your repository SSH address from the top of
+      your repository home page. Choose a directory and type:
+    </p>
+    <pre class="terminal">
+$ <strong>git clone git@version.aalto.fi:YOUR_USER_NAME/wsd2019.git</strong>
+
+Cloning into 'wsd2019'...
+remote: Counting objects: 3, done.
+remote: Total 3 (delta 0), reused 0 (delta 0)
+Receiving objects: 100% (3/3), done.
+Checking connectivity... done.
+...</pre>
+    <p>
+      This will authenticate you on the server with the SSH key you created in the
+      previous step and create a folder with the name of <code>wsd2019</code> where the
+      contents of your repository from your server are cloned. If you did not change
+      directories in Git Bash look for <code>C:\Users\&lt;username&gt;\wsd2019</code>
+      on your computer.
+    </p>
+    <p>
+      For the next steps in the instructions change directory to wsd2019. Following
+      will also lists the contents of your cloned work space.
+    </p>
+    <pre class="terminal">
+$ <strong>cd wsd2019</strong>
+$ <strong>ls</strong>
+exercises       lectures       readme.md</pre>
+    <p class="alert alert-warning">
+      Note that GitLab also has a feature where you can download
+      your project. If you download your project instead of cloning you will not
+      be able to submit your exercises.
+    </p>
+
+    <h3>4. Solving The Exercise</h3>
+    <p>Open up <code>exercises/01_tools/hello.html</code> on your favorite code editor... or if
+      you don't have a code editor read
+      <a href="http://www.sitepoint.com/sitepoint-smackdown-atom-vs-brackets-vs-light-table-vs-sublime-text/" target="_blank">review of editors</a> that are particularly
+      well suited for this course. If you have no preferences
+      <a href="https://atom.io/" target="_blank">Atom</a> is a good choice that we can support.
+    </p>
+
+    <p>You are free to edit the hello.html file to test things out,
+      it just needs to match following four criteria so you get the points
+      from this exercise:
+    </p>
+    <ul>
+      <li>Document hello.html will be valid html5</li>
+      <li><code>content</code> attribute of the <code>meta</code> element with
+        the <code>name</code> attribute <code>author</code> will be changed</li>
+      <li>Content of <code>em</code> element with the <code>id</code> attribute
+        <code>signature</code> will be changed</li>
+      <li>The changed attribute and element content will be the same</li>
+    </ul>
+
+    <h3>5. Add, Commit and Push changes</h3>
+    <div class="alert alert-danger">
+      <strong>On windows</strong>, git will most likely complain about your user
+      identity when you try to commit your changes. You should start this step
+      by explaining who you are.
+      <pre class="terminal">
+$ <strong>git config --global user.name "Firstname Lastname"</strong>
+$ <strong>git config --global user.email username@aalto.fi</strong></pre>
+    </div>
+    <p>
+      After you've modified the hello.html file, you need to commit your
+      modifications. First check the status of the project:
+    </p>
+    <pre>
+$ <strong>git status</strong>
+
+On branch master
+Your branch is up-to-date with 'origin/master'.
+
+Changes not staged for commit:
+(use "git add &lt;file&gt;..." to update what will be committed)
+(use "git checkout -- &lt;file&gt;..." to discard changes in working directory)
+
+modified:   exercises/01_tools/hello.html
+
+no changes added to commit (use "git add" and/or "git commit -a")</pre>
+    <p>
+      To <em>stage</em> files for a commit you first need to <em>add</em> them.
+      Note that add does not refer to adding a new file to your project but adding a file to a commit.
+    </p>
+    <pre>
+$ <strong>git add exercises/01_tools/hello.html</strong></pre>
+    <p>
+      Again you can check with git status that the file will be included in the
+      commit:
+    </p>
+    <pre>
+$ <strong>git status</strong>
+
+On branch master
+Your branch is up-to-date with 'origin/master'.
+
+Changes to be committed:
+(use "git reset HEAD &lt;file&gt;..." to unstage)
+
+modified:   exercises/01_tools/hello.html</pre>
+    <p>
+      Now you can commit these changes to your repository with <kbd>git commit</kbd>.
+      It will open a text editor where you can write
+      a message for the commit that reflects the changes that you've done.
+      You can also just type the commit message alongside the command with -m switch, for example:
+    </p>
+    <pre>
+$ <strong>git commit -m "Solved the first exercise"</strong>
+[master ab66b8d] Solved the first exercise
+1 file changed, 2 insertions(+), 2 deletion(-)</pre>
+    <p class="alert alert-warning">
+      On many bash systems the default editor is <strong>vim</strong>.
+      While it is an awesome editor there is a learning curve.
+      Hints of the day: <kbd>i</kbd> for insert mode. <kbd>Your message</kbd>
+      <kbd>ESC</kbd> to exit insert mode. <kbd>:wq</kbd> write and quit.
+    </p>
+    <p>
+      Now the commit is done and the changes you've made to the files that
+      you committed are tracked in the repository history.
+      You can verify this by command <kbd>git log</kbd>.The first entry should look
+      something like this:
+    </p>
+    <pre>
+$ <strong>git log</strong>
+commit 2b9c171c4f051cd46b5ce3d77141aaef5bfdce9a
+Author: Firstname Lastname &lt;YOUR_USER_NAME@version.aalto.fi&gt;
+Date:   Sun Oct 12 19:01:29 2019 +0300
+
+Solved the first exercise</pre>
+    <p>
+      What remains is pushing these changes to your remote repository
+      in GitLab server which is known as "origin" of your clone.
+      This can be done with <kbd>git push</kbd>:
+    </p>
+    <pre>
+$ <strong>git push origin master</strong>
+Counting objects: 7, done.
+Delta compression using up to 8 threads.
+Compressing objects: 100% (3/3), done.
+Writing objects: 100% (4/4), 345 bytes, done.
+Total 4 (delta 2), reused 0 (delta 0)
+To git@version.aalto.fi:xxxxxxxx/wsd-material.git
+eb2fdc8..ab66b8d  master -&gt; master</pre>
+    <p>If there were no errors the changes are now reflected in
+      GitLab (you can browse your project's files if you want to verify this).
+      If you want to brush up your git skills
+      <a href="https://try.github.io" target="_blank">try this</a>.
+    </p>
+
+    <h3>6. Submitting Your Project to A+</h3>
+
+    <p>
+      Submitting your solution is similar to the first exercise. Just copy and
+      paste your GitLab project's URL to A+.
+    </p>
+
+  </div>
+
+  <div class="content" id="browser">
+    <h1>3. Browser Tools</h1>
+    <p>Solve the puzzle at A+.</p>
+  </div>
+
+</body>
+</html>

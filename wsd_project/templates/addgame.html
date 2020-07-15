@@ -1,0 +1,22 @@
+{% extends "base.html" %}
+{% load crispy_forms_tags %}
+  {% block title %}Add game{% endblock title %}
+  {% block content %}
+    <div class="container p-3 my-3">
+      <h1>Add your game to our database</h1>
+      {% if submitted %}
+        <div class="alert alert-success">
+          Your game was added successfully. Thank you.
+        </div>
+      {% else %}
+        <form action="" method="post" novalidate>
+          {% csrf_token %}
+          <div class="form-group">
+            {{ form|crispy }}
+            <input type="submit" class="btn btn-info" value="Add">
+          </div>
+        </form>
+      {% endif %}
+    </div>
+
+  {% endblock content %}

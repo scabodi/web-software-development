@@ -1,0 +1,155 @@
+{% extends "base.html" %}
+{% block metadata %}
+  <meta name="title" content={{game.name}}>
+  <meta name="description" content={{game.description}}>
+  <!-- Open Graph / Facebook -->
+  <meta property="og:type" content="website">
+  <meta property="og:url" content={{game.get_description_url}}>
+  <meta property="og:title" content={{game.name}}>
+  <meta property="og:description" content={{game.description}}>
+  <meta property="og:image" content="https://cdn.pixabay.com/photo/2017/03/13/23/28/icon-2141484_960_720.png">
+
+  <!-- Twitter -->
+  <meta property="twitter:card" content="summary_large_image">
+  <meta property="twitter:url" content={{game.get_description_url}}>
+  <meta property="twitter:title" content={{game.name}}>
+  <meta property="twitter:description" content="{{game.name}}>
+  <meta property="twitter:image" content="https://cdn.pixabay.com/photo/2017/03/13/23/28/icon-2141484_960_720.png">
+{% endblock metadata %}
+{% block title %}Game view{% endblock title %}
+{% block content %}
+{% load social_share %}
+{% if found %}
+<div class="container p-3 my-3">
+  <h1>{{game.name}}</h1>
+  <div class="pull-right">
+    <div class="alert alert-info">
+      Highest score: <strong>{{game.global_highscore}}</strong>
+    </div>
+    <div class="alert alert-success">
+      Personal TOP3 scores:
+      <ul>
+        {% for score in top3 %}
+        <li><strong>{{score}}</strong></li>
+        {% empty %}
+        <p>You haven't finished any session yet. </p>
+        {% endfor %}
+      </ul>
+    </div>
+    <button type="button" class="btn btn-outline-primary">
+      {% post_to_facebook game.get_description_url "<span class='fa fa-facebook'></span> Share on Facebook" %}
+    </button><br>
+    <button type="button" class="btn btn-outline-info">
+      {% post_to_twitter "Check out this Game: {{game.name}}" game.get_description_url "<span class='fa fa-twitter'></span> Share on Twitter" %}
+    </button><br>
+    <button type="button" class="btn btn-outline-danger">
+      {% post_to_gplus game.get_description_url "<span class='fa fa-google'></span> Share on Google+" %}
+    </button><br>
+    <button type="button" class="btn btn-outline-info">
+      {% post_to_linkedin game.name game.get_description_url "<span class='fa fa-linkedin'></span> Share to LinkedIn" %}
+    </button><br>
+  </div>
+  <p><i>{{game.description}}</i></p>
+
+  <ul id="actions"></ul>
+
+  <div id="gameDiv">
+    <iframe id="gameiframe" class="embed-responsive-item" src={{game.url}}></iframe>
+  </div>
+</div>
+{% csrf_token %}
+<script>
+  $(document).ready(function() {
+    'use strict';
+    function sendError(errormsg) {
+      var msg =  {
+          messageType: "ERROR",
+          info: errormsg
+        };
+        gameiframe.contentWindow.postMessage(msg, "*");
+
+    }
+
+    $(window).on('message', function(evt) {
+      var data = evt.originalEvent.data;
+      var gameiframe = document.getElementById('gameiframe');
+      var id = '{{ session.id }}';
+      console.log(data);
+      if (data.messageType == "SAVE") {
+        $.ajax(
+          {
+            type:"POST",
+            url: "/updategame/",
+            data : {
+              sessionid : id,
+              content : JSON.stringify(data)
+            },
+            headers: {'X-CSRFToken': '{{ csrf_token }}'},
+            success: function( data )
+            {
+              alert("Game saved!");
+            }
+        })
+      }
+      else if (data.messageType == "LOAD_REQUEST") {
+        $.ajax(
+          {
+            url: "/updategame/",
+            data : {
+              sessionid : id,
+              content : JSON.stringify(data)
+            },
+            headers: {'X-CSRFToken': '{{ csrf_token }}'},
+            success: function( data )
+            {
+              try {
+                var msg = {
+                  messageType: "LOAD",
+                  gameState: JSON.parse(data)
+                };
+                console.log(msg);
+                gameiframe.contentWindow.postMessage(msg, "*");
+                alert("Gamestate loaded from the database!");
+              }
+
+              catch(err) {
+                sendError("Error occured! Saved game session doesn't seem to exist.");
+              }
+            }
+        })
+      }
+      else if (data.messageType == "SCORE") {
+        $.ajax(
+          {
+            type:"POST",
+            url: "/updategame/",
+            data:{
+              sessionid : id,
+              content : JSON.stringify(data)
+            },
+            headers: {'X-CSRFToken': '{{ csrf_token }}'},
+            success: function( data )
+            {
+              console.log("Score submitted");
+            }
+        })
+      }
+      else if (data.messageType == "SETTING") {
+        document.getElementById("gameiframe").height = data.options.height;
+        document.getElementById("gameiframe").width = data.options.width;
+      }
+      else {
+        sendError("Error parsing message");
+      }
+    });
+  });
+</script>
+{% else %}
+<div class="container">
+  <div class="alert alert-danger">
+    Sorry, you dont own this game. To buy it go to the <a href="{{url}}">catalogue</a>
+  </div>
+
+</div>
+{% endif %}
+{% endblock content %}

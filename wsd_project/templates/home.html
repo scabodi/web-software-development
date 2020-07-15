@@ -1,0 +1,38 @@
+{% extends "base.html" %}
+{% block content %}
+  <div class="container p-3 my-3">
+    <div class="jumbotron">
+      <h1> Welcome to GAMELAND website!</h1>
+      {% if user.is_authenticated %}
+        <h1> Welcome <strong>{{ user.username }}</strong>! </h1>
+      {% else %}
+        <h2> Please <a href="/login">login</a> in order to explore the content of the website!
+          If you don't have an account yet, you can <a href="/signup">signup</a> and enjoy our website.</h2>
+      {% endif %}
+    </div>
+    {% if user.profile.is_player %}
+    <p>As a <strong>player</strong> in this website you have several actions to perform.</p>
+    <p>Here is a small introduction to what you can do:</p>
+    <ul>
+      <li>You can explore all the games available for purchase in the <a href="/allgames">catalogue</a></li>
+      <li>You can see each games's features by clicking on the game's name in the catalogue </li>
+      <li>You can buy a game and, once purchased, you can play with it</li>
+      <li>You can check your profile's info and purchased games <a href="/mygames">here</a> or by clicking over your prifile name (top right)</li>
+    </ul>
+    {% elif user.profile.is_developer %}
+    <p>As a <strong>developer</strong> in this website you have several actions to perform.</p>
+    <p>Here is a small introduction to what you can do:</p>
+    <ul>
+      <li>You can <a href="/addgame">add</a> your own games</li>
+      <li>You can explore all the games available in our website in the <a href="/allgames">catalogue</a></li>
+      <li>You can see each games's features by clicking on the game's name in the catalogue </li>
+      <li>You can modify or remove your own games</li>
+      <li>You can check your profile's info and sales statistics of your games <a href="/salesstats">here</a> or by clicking over your prifile name (top right)</li>
+    </ul>
+    {% elif user.is_authenticated and not user.profile.is_developer and not user.profile.is_player %}
+    <p>With the social media login, you have just one more step to complete your login!</p>
+    <p>Choose below what kind of profile would you like to create:</p>
+    <a class="btn btn-primary" href="/register_social_as_player" role="button">Player</a> or <a class="btn btn-primary" href="/register_social_as_developer" role="button">Developer</a>
+    {% endif %}
+  </div>
+{% endblock content %}

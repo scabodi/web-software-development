@@ -1,0 +1,28 @@
+#header{
+  display:block;
+}
+#navigation {
+  list-style-type: none;
+}
+#navigation li{
+  display:inline;
+}
+
+#content{
+  float:left;
+  width:75%;
+  display:block;
+}
+#aside{
+  float:right;
+  width: 20%;
+  display:block;
+}
+
+#footer{
+  display:block;
+  float:right;
+  width:100%;
+  text-align:center;
+
+}

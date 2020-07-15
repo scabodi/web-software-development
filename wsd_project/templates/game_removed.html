@@ -1,0 +1,10 @@
+{% extends "base.html" %}
+  {% block title %}Game removed{% endblock title %}
+  {% block content %}
+    <div class="container">
+      <div class="alert alert-success">
+        <p>The game <strong>{{game.name}}</strong> has been successfully removed.</p>
+        <a href="{{redirect_url}}">Click here</a> to go back to the home page.
+      </div>
+    </div>
+    {% endblock content %}

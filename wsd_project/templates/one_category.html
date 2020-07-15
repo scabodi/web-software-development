@@ -1,0 +1,21 @@
+{% extends "base.html" %}
+{% block title %}Games{% endblock title %}
+{% block content %}
+<div class="container p-3 my-3">
+  <h1>Here is a list of all the games in this category</h1>
+  <ul class="list-group">
+    {% for g in games %}
+      <li style=" list-style: none">
+        <a href="{{g.get_description_url}}" class="list-group-item list-group-item-action">{{g.name}}</a>
+      </li>
+    {% empty %}
+      <li style=" list-style: none">
+        <div class="alert alert-danger" role="alert">
+          We are sorry. There aren't games in this category yet :(
+        </div>
+      </li>
+    {% endfor %}
+  </ul>
+</div>
+
+{% endblock content %}

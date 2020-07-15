@@ -1,0 +1,15 @@
+{% extends "base.html" %}
+{% block title %}Categories{% endblock title %}
+{% block content %}
+<div class="container p-3 my-3">
+  <h1>Here is a list of all the categories</h1>
+  <ul class="list-group">
+    {% for c in categories %}
+      <li style=" list-style: none">
+        <a href={{c.0|lower}} class="list-group-item list-group-item-action">{{c.0}}</a>
+      </li>
+    {% endfor %}
+  </ul>
+</div>
+
+{% endblock content %}

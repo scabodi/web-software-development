@@ -1,0 +1,54 @@
+{% extends "base.html" %}
+{% block title %}Developer statistics{% endblock title %}
+{% block content %}
+{% if user.is_authenticated %}
+<div class="container p-3 my-3">
+  <h1>Developer info</h1>
+  <div class="list-group">
+    <li class="list-group-item">Username: <strong>{{user.username}}</strong></li>
+    {% if user.profile.first_name %}
+    <li  class="list-group-item">First name: <strong>{{user.profile.first_name}}</strong></li>
+    <li class="list-group-item">Last name: <strong>{{user.profile.last_name}}</strong></li>
+    <li class="list-group-item">E-mail: <strong>{{user.profile.email}}</strong></li>
+    {% endif %}
+    <li class="list-group-item">Developed games:
+
+    <ul class="list-group">
+      {% for game in games %}
+        <li style=" list-style: none">
+          <a href="{{game.get_description_url}}" class="list-group-item list-group-item-action"><strong>{{game.name}}</strong></a>
+        </li>
+      {% empty %}
+        <li style=" list-style: none">
+          <div class="alert alert-danger" role="alert">
+            You haven't added any game to the website yet.
+            You can add one <a href="/addgame" class="alert-link">here</a>.
+          </div>
+        </li>
+      {% endfor %}
+    </ul>
+  </div>
+  <h1>Sale statistics</h1>
+    {% for game, tot in counter.items %}
+      <div class="list-group">
+        <a href="#" class="list-group-item list-group-item-action"><strong>{{game.name}}</strong> has been sold
+          <strong>{{tot}}</strong> times</a>
+          <div class="list-group">
+            {% for g, dates in json.items %}
+              {% if g == game %}
+                {% for date in dates %}
+                  <a href="#" class="list-group-item list-group-item-action">{{date}}</a>
+                {% endfor %}
+              {% endif %}
+            {% endfor %}
+          </div>
+        </div>
+    {% empty %}
+      <div class="alert alert-danger" role="alert">
+        Sorry, none of your games has been sold yet. You can add other games
+        for purchase <a href="/addgame" class="alert-link">here</a>.
+      </div>
+    {% endfor %}
+</div>
+{% endif %}
+{% endblock content %}

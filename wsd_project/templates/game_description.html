@@ -1,0 +1,40 @@
+{% extends "base.html" %}
+{% load crispy_forms_tags %}
+{% block metadata %}
+  <meta name="title" content={{game.name}}>
+  <meta name="description" content={{game.description}}>
+  <!-- Open Graph / Facebook -->
+  <meta property="og:type" content="website">
+  <meta property="og:url" content={{game.get_description_url}}>
+  <meta property="og:title" content={{game.name}}>
+  <meta property="og:description" content={{game.description}}>
+  <meta property="og:image" content="https://cdn.pixabay.com/photo/2017/03/13/23/28/icon-2141484_960_720.png">
+
+<!-- Twitter -->
+<meta property="twitter:card" content="summary_large_image">
+<meta property="twitter:url" content={{game.get_description_url}}>
+<meta property="twitter:title" content={{game.name}}>
+<meta property="twitter:description" content="{{game.name}}>
+<meta property="twitter:image" content="https://cdn.pixabay.com/photo/2017/03/13/23/28/icon-2141484_960_720.png">
+{% endblock metadata %}
+{% block title %} {{game.name}} {% endblock title %}
+{% block content %}
+<div class="container p-3 my-3">
+  <h1>Game description</h1>
+  <form action="https://tilkkutakki.cs.aalto.fi/payments/pay" method="post">
+  {% csrf_token %}
+    <div class="form-group">
+      {{ form|crispy }}
+      {% if button == "buy" %}
+        <input type="submit" class="btn btn-info" value="Buy">
+      {% elif button == "play" %}
+        <a href="/game/{{game.id}}" type="button" class="btn btn-success">Play</a>
+      {% elif button == "developer" %}
+        <a href="/modify_game/{{game.id}}" type="button" class="btn btn-info">Modify</a>
+        <a href="/remove_game/{{game.id}}" type="button" class="btn btn-danger">Remove</a>
+      {% endif %}
+    </div>
+  </form>
+</div>
+
+{% endblock content %}

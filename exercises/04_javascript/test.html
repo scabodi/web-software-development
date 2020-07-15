@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>Testing Javascript Arrays and Objects</title>
+    <link rel="stylesheet" href="https://code.jquery.com/qunit/qunit-2.4.1.css">
+  </head>
+  <body>
+    <div id="qunit"></div>
+    <div id="qunit-fixture"></div>
+    <script type="text/javascript" src="../lib/jquery-3.2.1.min.js"></script>
+    <script type="text/javascript" src="../lib/qunit-2.4.1.js"></script>
+
+    <!-- Load student code -->
+    <script type="text/javascript" src="exercises.js"></script>
+
+    <!-- Define tests -->
+    <script type="text/javascript">
+
+    QUnit.test('Test keywordusage function', function (assert) {
+      'use strict';
+      assert.ok(typeof keywordusage !== "undefined", "Is function keywordusage defined?");
+      assert.ok(jQuery.isFunction(keywordusage), "Is keywordusage a function?");
+      var res = keywordusage('Dive Into Python is a free book for experienced programmers', ['Python', 'python', 'scala']);
+      assert.ok($.isArray(res), "Test if keywordusage returned an array.");
+      assert.deepEqual(res, [true, false, false], "Testing provided example case");
+    });
+
+    QUnit.test('Test frequencies function', function (assert) {
+      'use strict';
+      assert.ok(typeof frequencies !== "undefined", "Is function frequencies defined?");
+      assert.ok(jQuery.isFunction(frequencies), "Is frequencies  a function?");
+      var d = frequencies('foo foo bar foo   bar buz', ['foo', 'bar']);
+      assert.ok(typeof d !== "undefined", "Test if frequencies returned a value.");
+      assert.deepEqual(d, {'bar': 2, 'foo': 3}, "Testing provided example case");
+    });
+
+    QUnit.test('Test rotate function', function (assert) {
+      'use strict';
+      assert.ok(typeof rotate !== "undefined", "Is function rotate defined?");
+      assert.ok(jQuery.isFunction(rotate), "Is rotate a function?");
+      var a = [1, 2, 3, 4];
+      rotate(a);
+      assert.deepEqual(a, [4, 1, 2, 3], "Testing provided example case");
+      rotate(a, -1);
+      assert.deepEqual(a, [1, 2, 3, 4], "Testing provided example case");
+      rotate(a, 10);
+      assert.deepEqual(a, [3, 4, 1, 2], "Testing provided example case");
+      rotate(a, -5);
+      assert.deepEqual(a, [4, 1, 2, 3], "Testing provided example case");
+      rotate(a, 0);
+      assert.deepEqual(a, [4, 1, 2, 3], "Testing provided example case");
+    });
+
+    </script>
+  </body>
+</html>

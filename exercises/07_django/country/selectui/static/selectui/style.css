@@ -1,0 +1,25 @@
+body {
+    font-size: 13px;
+    font-family: arial, helvetica, sans-serif;
+    max-width: 750px;
+}
+#continentMenu {
+    list-style: none;
+    padding: 0;
+}
+#continentMenu li {
+    display: inline;
+    margin-right: 15px;
+}
+#tableContainer {
+    min-height: 400px;
+}
+#countryTable td {
+    padding-right: 10px;
+}
+.codesample {
+    max-height: 150px;
+    overflow: auto;
+    margin-left: 20px;
+    border: solid silver 1px;
+}

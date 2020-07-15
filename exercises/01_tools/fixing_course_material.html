@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Fixing Course Material</title>
+  <link rel="stylesheet" type="text/css" href="../lib/bootstrap.min.css" />
+  <link rel="stylesheet" type="text/css" href="../lib/exercises.css" />
+</head>
+<body>
+
+  <div id="exercises">
+    <h1>Fixing Course Material</h1>
+  </div>
+
+  <div class="content">
+
+    <div class="panel panel-info">
+      <div class="panel-heading">Fixing Course Material</div>
+      <div class="panel-body">
+        If you spot clear errors in the lecture slides you can suggest merge requests
+        through GitLab.
+      </div>
+    </div>
+
+    <p>
+      Make sure that you <strong>do merge requests from a different branch</strong>
+      and make sure that it does not contain any exercise solutions. If you do a merge request
+      from master-&gt;master and continue committing exercise solutions those will be included in
+      the merge request.
+    </p>
+
+    <p>
+      Short instructions (note you need to use <code>haaranl1</code> main repo at first line):
+    </p>
+
+    <pre class="terminal">
+$ <strong>git remote add upstream git@version.aalto.fi:oseppala/wsd2017.git</strong>
+$ <strong>git fetch upstream</strong>
+$ <strong>git checkout -b corrections upstream/master</strong></pre>
+
+    <p>
+      Now you are in a different branch <code>corrections</code> and there are only
+      the material files in your working directory. You can now add corrections,
+      add and commit them with a descriptive message.
+    </p>
+
+    <pre class="terminal">
+$ <strong>git commit -m "Fix ..."</strong>
+$ <strong>git push origin corrections</strong></pre>
+
+    <p>
+      In future you can change branches between corrections and master using the git
+      checkout. You need to checkout the master for working with your solutions.
+    </p>
+
+    <pre class="terminal">
+$ <strong>git status</strong>
+$ <strong>git checkout master</strong>
+$ <strong>git status</strong></pre>
+
+    <p>
+      Now you should go to <a href="https://version.aalto.fi/gitlab/oseppala/wsd2019">version.aalto.fi</a>.
+      In the <strong>oseppala</strong> main repo go to the tab <strong>Merge Requests</strong>.
+      Enter and add a new merge request. On the left, select your own repo and branch <code>corrections</code>.
+      On the right, select <code>oseppala/wsd2019</code> and <code>master</code>.
+    </p>
+  </div>
+
+</body>
+</html>
