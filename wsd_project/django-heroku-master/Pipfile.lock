@@ -61,7 +61,7 @@
                 "sha256:7c8ff92285406fb349e765e9ade685eec7271d6f5c3f918e495a74768b765c99",
                 "sha256:dc3b61d054f1bced64628c62025d480f655303aea9f408e5996c339a543b45f0"
             ],
-            "version": "==2.0.2"
+            "version": ">=2.2.13"
         },
         "gunicorn": {
             "hashes": [
